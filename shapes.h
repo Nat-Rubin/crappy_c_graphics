@@ -44,6 +44,6 @@ void rect_fill_x(Canvas *canvas, size_t x, size_t y, size_t width, size_t height
 Circle circle_init(int x_center, int y_center, int radius);
 void circle_draw(Canvas *canvas, Circle *circle, uint32_t color);
 Triangle triangle_init(const int *p1, const int *p2, const int *p3);
-void triangle_draw(Canvas *canvas, Triangle *triangle, uint32_t color);
+void triangle_draw(Canvas *canvas, Triangle *triangle, uint32_t color, bool interpolated);
 
 #endif //C_GRAPHICS_SHAPES_H

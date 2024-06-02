@@ -145,7 +145,7 @@ int edge(const int p1[2], const int p2[2], const int p3[2]) {
     return (p2[0]-p1[0])*(p3[1]-p1[1])-(p2[1]-p1[1])*(p3[0]-p1[0]);
 }
 
-void triangle_draw(Canvas *canvas, Triangle *triangle, uint32_t color) {
+void triangle_draw(Canvas *canvas, Triangle *triangle, uint32_t color, bool interpolated) {
     // Currently clock-wise. idk why cuz should be edge >=0 but is currently edge <= 0
     int *p1 = triangle->p1;
     int *p2 = triangle->p2;
@@ -162,13 +162,28 @@ void triangle_draw(Canvas *canvas, Triangle *triangle, uint32_t color) {
         for (size_t j = min_x; j < max_x; ++j) {
             point[0] = (int)j;
             point[1] = (int)i;
+            int p1p2p3 = edge(p1, p2, p3);
             int p1p2 = edge(p1, p2, point);
             int p2p3 = edge(p2, p3, point);
             int p3p1 = edge(p3, p1, point);
 
             if (p1p2 <= 0 && p2p3 <= 0 && p3p1 <= 0) {
-                int current_index = (int)((i*canvas->width+j));
-                pixels[current_index] = color;
+                int current_index = (int)(i*canvas->width+j);
+
+                if (interpolated) {
+                    float weight_p1 = (float)p2p3 / (float)p1p2p3;
+                    float weight_p2 = (float)p3p1 / (float)p1p2p3;
+                    float weight_p3 = (float)p1p2 / (float)p1p2p3;
+
+                    uint8_t color_r = 0xFF*weight_p1;
+                    uint8_t color_g = 0xFF*weight_p2;
+                    uint8_t color_b = 0xFF*weight_p3;
+
+                    uint32_t inter_color = (color_r << 3*8) | (color_g << 2*8) | (color_b << 1*8) | 0xFF;
+                    pixels[current_index] = inter_color;
+                } else {
+                    pixels[current_index] = color;
+                }
             }
         }
     }

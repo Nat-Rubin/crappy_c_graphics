@@ -33,14 +33,14 @@ int main(void) {
     int p3[2] = {100, 900};
     Triangle triangle = triangle_init(p1, p2, p3);
 
-    triangle_draw(&canvas, &triangle, 0x0000FFFF);
+    triangle_draw(&canvas, &triangle, 0x0000FFFF, false);
 
     int p21[2] = {350, 100};
     int p22[2] = {700, 300};
     int p23[2] = {100, 350};
     Triangle triangle2 = triangle_init(p21, p22, p23);
 
-    triangle_draw(&canvas, &triangle2, colors.ORANGE);
+    triangle_draw(&canvas, &triangle2, colors.ORANGE, true);
 
     canvas_to_ppm(&canvas);
 
