@@ -7,6 +7,7 @@
 
 #include <stdint.h>
 #include "canvas.h"
+#include "triangle.h"
 
 typedef struct Line{
     int x1;
@@ -29,12 +30,6 @@ typedef struct Circle {
     int radius;
 } Circle;
 
-typedef struct Triangle {
-    // clockwise
-    int p1[2];
-    int p2[2];
-    int p3[2];
-} Triangle;
 
 Line line_init(int x1, int y1, int x2, int y2, uint32_t thickness);
 void line_draw(Canvas *canvas, Line *line, uint32_t color);

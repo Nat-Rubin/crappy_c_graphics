@@ -9,9 +9,9 @@ Canvas canvas_init(size_t width, size_t height, char* file_path) {
     canvas.height = height;
     canvas.total_pixels = width*height;
     canvas.file_path = file_path;
-    //uint32_t pixels[canvas.height * canvas.width];
-    //canvas.pixels = pixels;
     canvas.pixels = malloc(sizeof(uint32_t)*canvas.total_pixels);
+    canvas.background = 0xFFFFFF;
+    canvas.triangles = malloc(sizeof(Triangle)*1000);
 
     return canvas;
 }

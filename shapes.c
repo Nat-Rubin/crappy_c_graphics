@@ -97,12 +97,6 @@ void circle_draw(Canvas *canvas, Circle *circle, uint32_t color) {
 
     for (size_t i = 0; i < canvas->height; ++i) {
         for (size_t j = 0; j < canvas->width; ++j) {
-//            int y = (int) i;//(int)i*(int)canvas->width;
-//            int x = h + (int)(sqrt(pow(r,2) - pow((y-k),2)));
-//            int current_index = (int)((i*canvas->width+j));
-//            if (current_index == x*canvas->width) {
-//                pixels[current_index] = color;
-//            }
             if ((pow((double)i-circle->y_center,2) + pow((double)j-circle->x_center,2) - pow(r,2)) <= 0) {
                 int current_index = (int)((i*canvas->width+j));
                 pixels[current_index] = color;
@@ -111,12 +105,8 @@ void circle_draw(Canvas *canvas, Circle *circle, uint32_t color) {
     }
 }
 
-Triangle triangle_init(const int p1[2], const int p2[2], const int p3[2]) {
-    Triangle triangle;
-    memcpy(triangle.p1, p1, sizeof(int)*2);
-    memcpy(triangle.p2, p3, sizeof(int)*2);
-    memcpy(triangle.p3, p2, sizeof(int)*2);
-    return triangle;
+Triangle triangle_init(const int *p1, const int *p2, const int *p3) {
+    return triangle_init_tri(p1, p2, p3);
 }
 
 /***
@@ -175,9 +165,9 @@ void triangle_draw(Canvas *canvas, Triangle *triangle, uint32_t color, bool inte
                     float weight_p2 = (float)p3p1 / (float)p1p2p3;
                     float weight_p3 = (float)p1p2 / (float)p1p2p3;
 
-                    uint8_t color_r = 0xFF*weight_p1;
-                    uint8_t color_g = 0xFF*weight_p2;
-                    uint8_t color_b = 0xFF*weight_p3;
+                    uint8_t color_r = (uint8_t)(0xFF*weight_p1);
+                    uint8_t color_g = (uint8_t)(0xFF*weight_p2);
+                    uint8_t color_b = (uint8_t)(0xFF*weight_p3);
 
                     uint32_t inter_color = (color_r << 3*8) | (color_g << 2*8) | (color_b << 1*8) | 0xFF;
                     pixels[current_index] = inter_color;

@@ -33,7 +33,7 @@ int main(void) {
     int p3[2] = {100, 900};
     Triangle triangle = triangle_init(p1, p2, p3);
 
-    triangle_draw(&canvas, &triangle, 0x0000FFFF, false);
+    //triangle_draw(&canvas, &triangle, 0x0000FFFF, false);
 
     int p21[2] = {350, 100};
     int p22[2] = {700, 300};

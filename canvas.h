@@ -4,6 +4,7 @@
 #include <stdint.h>
 #include <stdlib.h>
 #include <stdbool.h>
+#include "triangle.h"
 
 typedef struct Canvas {
     size_t width;
@@ -11,6 +12,8 @@ typedef struct Canvas {
     size_t total_pixels;
     uint32_t *pixels;
     char* file_path;
+    uint32_t background;
+    Triangle *triangles;
 } Canvas;
 
 void canvas_fill(Canvas *canvas, uint32_t color);
