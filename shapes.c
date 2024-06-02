@@ -1,6 +1,7 @@
 #include <stdint.h>
 #include <math.h>
 #include <string.h>
+#include <stdlib.h>
 #include "canvas.h"
 #include "shapes.h"
 
@@ -53,7 +54,7 @@ Rectangle rect_init(int x_pos, int y_pos, int width, int height) {
     return rect;
 }
 
-Rectangle rect_fill(Canvas *canvas, Rectangle *rect, uint32_t color) {
+void rect_fill(Canvas *canvas, Rectangle *rect, uint32_t color) {
     uint32_t *pixels = canvas->pixels;
     size_t x2 = rect->x_pos+rect->width-1;
     size_t y2 = rect->y_pos+rect->height-1;
@@ -63,7 +64,6 @@ Rectangle rect_fill(Canvas *canvas, Rectangle *rect, uint32_t color) {
                 pixels[i*canvas->width+j] = color;
             }
         }
-
     }
 }
 
@@ -119,6 +119,28 @@ Triangle triangle_init(const int p1[2], const int p2[2], const int p3[2]) {
     return triangle;
 }
 
+/***
+ * Finds the min of 3 values
+ * @return
+ */
+int min_3(int a, int b, int c) {
+    int min = a;
+    if (b < min) min = b;
+    if (c < min) min = c;
+    return min;
+}
+
+/***
+ * Finds the max of 3 values
+ * @return
+ */
+int max_3(int a, int b, int c) {
+    int max = a;
+    if (b > max) max = b;
+    if (c > max) max = c;
+    return max;
+}
+
 int edge(const int p1[2], const int p2[2], const int p3[2]) {
     return (p2[0]-p1[0])*(p3[1]-p1[1])-(p2[1]-p1[1])*(p3[0]-p1[0]);
 }
@@ -130,9 +152,14 @@ void triangle_draw(Canvas *canvas, Triangle *triangle, uint32_t color) {
     int *p3 = triangle->p3;
     uint32_t *pixels = canvas->pixels;
 
+    int min_x = min_3(p1[0], p2[0], p3[0]);
+    int max_x = max_3(p1[0], p2[0], p3[0]);
+    int min_y = min_3(p1[1], p2[1], p3[1]);
+    int max_y = max_3(p1[1], p2[1], p3[1]);
+
     int point[2];
-    for (size_t i = 0; i < canvas->height; ++i) {
-        for (size_t j = 0; j < canvas->width; ++j) {
+    for (size_t i = min_y; i < max_y; ++i) {
+        for (size_t j = min_x; j < max_x; ++j) {
             point[0] = (int)j;
             point[1] = (int)i;
             int p1p2 = edge(p1, p2, point);

@@ -39,7 +39,7 @@ typedef struct Triangle {
 Line line_init(int x1, int y1, int x2, int y2, uint32_t thickness);
 void line_draw(Canvas *canvas, Line *line, uint32_t color);
 Rectangle rect_init(int x_pos, int y_pos, int width, int height);
-Rectangle rect_fill(Canvas *canvas, Rectangle *rect, uint32_t color);
+void rect_fill(Canvas *canvas, Rectangle *rect, uint32_t color);
 void rect_fill_x(Canvas *canvas, size_t x, size_t y, size_t width, size_t height, uint32_t color);
 Circle circle_init(int x_center, int y_center, int radius);
 void circle_draw(Canvas *canvas, Circle *circle, uint32_t color);
