@@ -172,11 +172,7 @@ void triangle_draw(Canvas *canvas, Triangle *triangle, bool interpolated) {
                     pixels[current_index] = inter_color;
                 } else {
                     float triangle_alpha = (float)(triangle->color & 0xFF)/255;  // over
-                    float current_pixel_alpha = (float)(pixels[current_index] & 0xFF)/255;
                     uint32_t alpha = (uint32_t)(triangle_alpha*(float)(triangle->color >> 1*8) + (float)(pixels[current_index] >> 1*8)*(1-triangle_alpha));
-                    //uint32_t color_component = (triangle->color >> 2)*triangle_alpha + (pixels[current_index] >> 2)*current_pixel_alpha*(1 - triangle_alpha);
-                    //color_component /= alpha;
-                    //pixels[current_index] = color_component;
                     alpha = (alpha << 1*8) | 0xFF;
                     pixels[current_index] = alpha;
                     //pixels[current_index] = triangle->color;
