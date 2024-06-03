@@ -5,8 +5,8 @@
 
 int main(void) {
     printf("Hello, World!\n");
-    Canvas canvas = canvas_init(1000, 1000, "background.ppm");
-    canvas_fill(&canvas, 0xFF0000FF);
+    Canvas canvas = canvas_init(1000, 1000, colors.WHITE, "background.ppm");
+    //canvas_fill(&canvas, 0xFF0000FF);
     rect_fill_x(&canvas, 100, 100, 300, 400, 0x00FF00FF);
 
     Rectangle rect = rect_init(600, 700, 350, 250);
@@ -31,16 +31,21 @@ int main(void) {
     int p1[2] = {100, 100};
     int p2[2] = {800, 100};
     int p3[2] = {100, 900};
-    Triangle triangle = triangle_init(p1, p2, p3);
+    Triangle triangle = triangle_init(p1, p2, p3, 0xFF0000FF);
 
-    //triangle_draw(&canvas, &triangle, 0x0000FFFF, false);
+    //triangle_draw(&canvas, &triangle, false);
 
     int p21[2] = {350, 100};
     int p22[2] = {700, 300};
     int p23[2] = {100, 350};
-    Triangle triangle2 = triangle_init(p21, p22, p23);
+    Triangle triangle2 = triangle_init(p21, p22, p23, 0x0000FF80);
 
-    triangle_draw(&canvas, &triangle2, colors.ORANGE, true);
+    //triangle_draw(&canvas, &triangle2, true);
+
+    add_triangle(&canvas, &triangle);
+    add_triangle(&canvas, &triangle2);
+
+    canvas_update(&canvas);
 
     canvas_to_ppm(&canvas);
 

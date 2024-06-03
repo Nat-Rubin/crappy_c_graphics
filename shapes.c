@@ -1,7 +1,6 @@
 #include <stdint.h>
 #include <math.h>
 #include <string.h>
-#include <stdlib.h>
 #include "canvas.h"
 #include "shapes.h"
 
@@ -105,8 +104,8 @@ void circle_draw(Canvas *canvas, Circle *circle, uint32_t color) {
     }
 }
 
-Triangle triangle_init(const int *p1, const int *p2, const int *p3) {
-    return triangle_init_tri(p1, p2, p3);
+Triangle triangle_init(const int *p1, const int *p2, const int *p3, uint32_t color) {
+    return triangle_init_tri(p1, p2, p3, color);
 }
 
 /***
@@ -135,7 +134,7 @@ int edge(const int p1[2], const int p2[2], const int p3[2]) {
     return (p2[0]-p1[0])*(p3[1]-p1[1])-(p2[1]-p1[1])*(p3[0]-p1[0]);
 }
 
-void triangle_draw(Canvas *canvas, Triangle *triangle, uint32_t color, bool interpolated) {
+void triangle_draw(Canvas *canvas, Triangle *triangle, bool interpolated) {
     // Currently clock-wise. idk why cuz should be edge >=0 but is currently edge <= 0
     int *p1 = triangle->p1;
     int *p2 = triangle->p2;
@@ -172,7 +171,15 @@ void triangle_draw(Canvas *canvas, Triangle *triangle, uint32_t color, bool inte
                     uint32_t inter_color = (color_r << 3*8) | (color_g << 2*8) | (color_b << 1*8) | 0xFF;
                     pixels[current_index] = inter_color;
                 } else {
-                    pixels[current_index] = color;
+                    float triangle_alpha = (float)(triangle->color & 0xFF)/255;  // over
+                    float current_pixel_alpha = (float)(pixels[current_index] & 0xFF)/255;
+                    uint32_t alpha = (uint32_t)(triangle_alpha*(float)(triangle->color >> 1*8) + (float)(pixels[current_index] >> 1*8)*(1-triangle_alpha));
+                    //uint32_t color_component = (triangle->color >> 2)*triangle_alpha + (pixels[current_index] >> 2)*current_pixel_alpha*(1 - triangle_alpha);
+                    //color_component /= alpha;
+                    //pixels[current_index] = color_component;
+                    alpha = (alpha << 1*8) | 0xFF;
+                    pixels[current_index] = alpha;
+                    //pixels[current_index] = triangle->color;
                 }
             }
         }

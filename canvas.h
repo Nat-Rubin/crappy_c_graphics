@@ -12,14 +12,17 @@ typedef struct Canvas {
     size_t total_pixels;
     uint32_t *pixels;
     char* file_path;
-    uint32_t background;
-    Triangle *triangles;
+    uint32_t background_color;
+    uint64_t max_triangles;
+    uint64_t num_triangles;
+    Triangle *triangles; // TODO: maybe **triangles
 } Canvas;
 
-void canvas_fill(Canvas *canvas, uint32_t color);
-void canvas_update(Canvas *canvas);
+Canvas canvas_init(size_t width, size_t height, uint32_t color, char* file_path);
 bool canvas_to_ppm(Canvas *canvas);
-Canvas canvas_init(size_t width, size_t height, char* file_path);
 bool canvas_free(Canvas *canvas);
+void canvas_fill(Canvas *canvas, uint32_t color);
+void add_triangle(Canvas *canvas, Triangle *triangle);
+void canvas_update(Canvas *canvas);
 
 #endif //C_GRAPHICS_CANVAS_H

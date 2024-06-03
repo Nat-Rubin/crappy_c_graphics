@@ -11,16 +11,20 @@ typedef struct Colors{
     uint32_t PURPLE;
     uint32_t CYAN;
     uint32_t ORANGE;
+    uint32_t BLACK;
+    uint32_t WHITE;
 } Colors;
 
 Colors colors = {
-        .RED = 0xFF000000,
-        .GREEN = 0x00FF0000,
-        .BLUE = 0x0000FF00,
-        .YELLOW = 0xFFFF0000,
-        .PURPLE = 0xFF00FF00,
-        .CYAN = 0x00FFFF00,
-        .ORANGE = 0xFFA50000,
+        .RED = 0xFF0000FF,
+        .GREEN = 0x00FF00FF,
+        .BLUE = 0x0000FFFF,
+        .YELLOW = 0xFFFF00FF,
+        .PURPLE = 0xFF00FFFF,
+        .CYAN = 0x00FFFFFF,
+        .ORANGE = 0xFFA500FF,
+        .BLACK = 0x000000FF,
+        .WHITE = 0xFFFFFFFF,
 };
 
 uint32_t get_color_rand(void);
