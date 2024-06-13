@@ -2,6 +2,7 @@
 #include <stddef.h>
 #include "colors.h"
 #include "graphics.h"
+#include "transformations.h"
 
 int main(void) {
     printf("Hello, World!\n");
@@ -73,7 +74,40 @@ int main(void) {
 
     */
 
+    //int* matrix_vector_multiply(int **m1, int m1_width, int m1_height, int *m2, int m2_height)
+//    int m1[4][4] = {
+//            {0, 1, 2, 3},
+//            {4, 5, 6, 7},
+//            {8, 9, 10, 11},
+//            {12, 13, 14, 15},
+//    };
+//
+//    int m2[4] = {
+//            11,
+//            22,
+//            33,
+//            44
+//    };
+//
+//    int *result = matrix_vector_multiply(4, 4, m1, 4, m2);
 
+    #include "transformations.h"
 
+    Canvas canvas_tri_trans = canvas_init(2, 1000, 1000, colors.WHITE, "tri_1.ppm");
+    canvas_fill(&canvas_tri_trans, colors.WHITE);
+
+    int p1_1[3] = {0, 0, 0};
+    int p1_2[3] = {500, 0, 0};
+    int p1_3[3] = {250, 250, 0};
+    Triangle tri_t = triangle_init(p1_1, p1_2, p1_3, colors.RED);
+    triangle_draw(&canvas_tri_trans, &tri_t, false);
+    canvas_to_ppm(&canvas_tri_trans);
+
+    canvas_tri_trans.file_path = "tri_2.ppm";
+    int distances[3] = {300, 0, 0};
+    translate_triangle(&tri_t, distances);
+    canvas_fill(&canvas_tri_trans, colors.WHITE);
+    triangle_draw(&canvas_tri_trans, &tri_t, false);
+    canvas_to_ppm(&canvas_tri_trans);
     return 0;
 }
