@@ -1,6 +1,7 @@
 #include <stdint.h>
 #include <math.h>
 #include <string.h>
+#include <stddef.h>
 #include "canvas.h"
 #include "shapes.h"
 
@@ -104,8 +105,8 @@ void circle_draw(Canvas *canvas, Circle *circle, uint32_t color) {
     }
 }
 
-Triangle triangle_init(const int *p1, const int *p2, const int *p3, uint32_t color) {
-    return triangle_init_tri(p1, p2, p3, color);
+Triangle _triangle_init(const int *p1, const int *p2, const int *p3, uint32_t color) {
+    return _triangle_init_(p1, p2, p3, color);
 }
 
 /***
@@ -140,6 +141,8 @@ void triangle_draw(Canvas *canvas, Triangle *triangle, bool interpolated) {
     int *p2 = triangle->p2;
     int *p3 = triangle->p3;
     uint32_t *pixels = canvas->pixels;
+
+    int camera_loc[3] = {(int)canvas->width/2, (int)canvas->height/2, 0};
 
     int min_x = min_3(p1[0], p2[0], p3[0]);
     int max_x = max_3(p1[0], p2[0], p3[0]);

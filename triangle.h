@@ -5,12 +5,12 @@
 
 typedef struct Triangle {
     // clockwise
-    int p1[2];
-    int p2[2];
-    int p3[2];
+    int p1[3];
+    int p2[3];
+    int p3[3];
     uint32_t color;
 } Triangle;
 
-Triangle triangle_init_tri(const int *p1, const int *p2, const int *p3, uint32_t color);
+Triangle _triangle_init_(const int *p1, const int *p2, const int *p3, uint32_t color);
 
 #endif //C_GRAPHICS_TRIANGLE_H

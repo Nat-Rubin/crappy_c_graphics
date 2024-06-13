@@ -1,11 +1,14 @@
 #include <stdio.h>
-#include "canvas.h"
+#include <stddef.h>
 #include "colors.h"
-#include "shapes.h"
+#include "graphics.h"
 
 int main(void) {
     printf("Hello, World!\n");
-    Canvas canvas = canvas_init(1000, 1000, colors.WHITE, "background.ppm");
+
+    /*
+    // 2D testing
+    Canvas canvas = canvas_init(2, 1000, 1000, colors.WHITE, "background.ppm");
     //canvas_fill(&canvas, 0xFF0000FF);
     rect_fill_x(&canvas, 100, 100, 300, 400, 0x00FF00FF);
 
@@ -50,5 +53,27 @@ int main(void) {
     canvas_to_ppm(&canvas);
 
     canvas_free(&canvas);
+
+    // 3D testing
+    //
+    canvas = canvas_init(3, 600, 400, colors.WHITE, "3d-test.ppm");
+
+    int p3d1[3] = {10, 10, 50};
+    int p3d2[3] = {300, 100, 0};
+    int p3d3[3] = {10, 300, 20};
+    Triangle tri3d_1 = triangle_init(p3d1, p3d2, p3d3, 0x00FF00FF);
+
+    add_triangle(&canvas, &tri3d_1);
+
+    canvas_update(&canvas);
+
+    canvas_to_ppm(&canvas);
+
+    canvas_free(&canvas);
+
+    */
+
+
+
     return 0;
 }
