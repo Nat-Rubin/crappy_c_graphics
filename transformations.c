@@ -34,13 +34,20 @@ double rotation_mat_z[4][4] = {
         {  0,  0, 0, 1 },
 };
 
+double scaling_mat[4][4] = {
+        { -1,  0,  0, 0 },
+        {  0, -1,  0, 0 },
+        {  0,  0, -1, 0 },
+        {  0,  0,  0, 1 },
+};
+
 int* matrix_vector_multiply(int m1_width, int m1_height, double m1[][m1_height], int m2_height, int m2[m2_height]) {
     int* result = (int*)calloc(m1_height*1, sizeof(int));
     for (size_t i = 0; i < m1_width; ++i) {
         for (size_t j = 0; j < m1_height; ++j) {
 
             double m1_i_j = m1[i][j];
-            result[i] += m1[i][j]*m2[j];
+            result[i] += (int)(m1[i][j]*m2[j]);
         }
     }
     return result;
@@ -141,5 +148,39 @@ void rotate_triangle(Triangle *triangle, int axis, double degrees) {
 void rotation(ShapeFromTriangles *shape, int axis, double degrees) {
     for (size_t i = 0; i < shape->num_triangles; ++i) {
         rotate_triangle(shape->triangles[i], axis, degrees);
+    }
+}
+
+void scale_point(int point[3], int scale_factors[3]) {
+    int *coords_new;
+    int coords_old[4];
+    coords_old[0] = point[0];
+    coords_old[1] = point[1];
+    coords_old[2] = point[2];
+    coords_old[3] = 1;
+
+    scaling_mat[0][0] = scale_factors[0];
+    scaling_mat[1][1] = scale_factors[1];
+    scaling_mat[2][2] = scale_factors[2];
+
+    coords_new = matrix_vector_multiply(4, 4, scaling_mat, 4, coords_old);
+
+    point[0] = coords_new[0];
+    point[1] = coords_new[1];
+    point[2] = coords_new[2];
+    free(coords_new);
+}
+
+void scale_triangle(Triangle *triangle, int scale_factors[3]) {
+    scale_point(triangle->p1, scale_factors);
+    scale_point(triangle->p2, scale_factors);
+    scale_point(triangle->p3, scale_factors);
+}
+
+// x-axis = 0, y-axis = 1, z-axis = 2
+//TODO: check if positive and negative degrees works
+void scaling(ShapeFromTriangles *shape, int scale_factors[3]) {
+    for (size_t i = 0; i < shape->num_triangles; ++i) {
+        scale_triangle(shape->triangles[i], scale_factors);
     }
 }

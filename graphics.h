@@ -2,6 +2,7 @@
 #include "canvas.h"
 //#include "colors.h"
 #include "shapes.h"
+#include "transformations.h"
 
 #ifndef C_GRAPHICS_GRAPHICS_H
 #define C_GRAPHICS_GRAPHICS_H

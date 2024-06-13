@@ -16,4 +16,6 @@ void translate_triangle(Triangle *triangle, int distances[3]);
 void translation(ShapeFromTriangles *shape, int distances[3]);
 void rotate_triangle(Triangle *triangle, int axis, double degrees);
 void rotation(ShapeFromTriangles *shape, int axis, double degrees);
+void scale_triangle(Triangle *triangle, int scale_factors[3]);
+void scaling(ShapeFromTriangles *shape, int scale_factors[3]);
 #endif //C_GRAPHICS_TRANSLATIONS_H
