@@ -98,14 +98,20 @@ int main(void) {
 
     int p1_1[3] = {0, 0, 0};
     int p1_2[3] = {500, 0, 0};
-    int p1_3[3] = {250, 250, 0};
+    int p1_3[3] = {250, 500, 0};
     Triangle tri_t = triangle_init(p1_1, p1_2, p1_3, colors.RED);
     triangle_draw(&canvas_tri_trans, &tri_t, false);
     canvas_to_ppm(&canvas_tri_trans);
 
     canvas_tri_trans.file_path = "tri_2.ppm";
-    int distances[3] = {300, 0, 0};
+    int distances[3] = {250, 250, 0};
     translate_triangle(&tri_t, distances);
+    canvas_fill(&canvas_tri_trans, colors.WHITE);
+    triangle_draw(&canvas_tri_trans, &tri_t, false);
+    canvas_to_ppm(&canvas_tri_trans);
+
+    canvas_tri_trans.file_path = "tri_3.ppm";
+    rotate_triangle(&tri_t, 2, 90);
     canvas_fill(&canvas_tri_trans, colors.WHITE);
     triangle_draw(&canvas_tri_trans, &tri_t, false);
     canvas_to_ppm(&canvas_tri_trans);
